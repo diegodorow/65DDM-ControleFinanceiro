@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_fragment_lista_conta"
+        android:name="br.udesc.ddm.controlefinanceiro.ui.listacontas.ListaContasFragment"
+        android:label="@string/menu_listacontas"
+        tools:layout="@layout/fragment_lista_contas" />
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="br.udesc.ddm.controlefinanceiro.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_gallery"
+        android:name="br.udesc.ddm.controlefinanceiro.ui.gallery.GalleryFragment"
+        android:label="@string/menu_gallery"
+        tools:layout="@layout/fragment_gallery" />
+
+    <fragment
+        android:id="@+id/nav_slideshow"
+        android:name="br.udesc.ddm.controlefinanceiro.ui.slideshow.SlideshowFragment"
+        android:label="@string/menu_slideshow"
+        tools:layout="@layout/fragment_slideshow" />
+
+    <activity
+        android:id="@+id/nav_lista_contas"
+        android:name="br.udesc.ddm.controlefinanceiro.ui.activity.ListaContaActivity"
+        android:label="@string/menu_listacontas"
+        tools:layout="@layout/activity_lista_conta" />
+
+    <activity
+        android:id="@+id/nav_lista_tiposlancamentos"
+        android:name="br.udesc.ddm.controlefinanceiro.ui.activity.ListaTipoLancamentoActivity"
+        android:label="@string/menu_tiposlancamento"
+        tools:layout="@layout/activity_lista_tipo_lancamento" />
+
+    <activity
+        android:id="@+id/nav_lista_lancamentos"
+        android:name="br.udesc.ddm.controlefinanceiro.ui.activity.ListaLancamentoActivity"
+        android:label="@string/menu_lancamento"
+        tools:layout="@layout/activity_lista_lancamento" />
+
+    <activity
+        android:id="@+id/nav_cadastrar_conta"
+        android:name="br.udesc.ddm.controlefinanceiro.ui.activity.CadastrarContaActivity"
+        android:label="@string/menu_listacontas"
+        tools:layout="@layout/activity_cadastrar_conta" />
+
+</navigation>

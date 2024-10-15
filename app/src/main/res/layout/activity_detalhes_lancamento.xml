@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.DetalhesLancamentoActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".ui.activity.DetalhesLancamentoActivity">
+
+        <TextView
+            android:id="@+id/activity_detalhes_lancamento_nome"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:textSize="28sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintVertical_bias="0.0"
+            tools:text="Nome lançamento" />
+
+        <TextView
+            android:id="@+id/activity_detalhes_lancamento_tipogasto"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="@+id/activity_detalhes_lancamento_nome"
+            app:layout_constraintStart_toStartOf="@+id/activity_detalhes_lancamento_nome"
+            app:layout_constraintTop_toBottomOf="@+id/activity_detalhes_lancamento_nome"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintVertical_bias="0.0"
+            tools:text="Tipo gasto" />
+
+        <TextView
+            android:id="@+id/activity_detalhes_lancamento_conta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@drawable/plano_de_fundo_arredondado"
+            android:elevation="10dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:padding="8dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textColor="@android:color/holo_blue_light"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/activity_detalhes_lancamento_tipogasto"
+            app:layout_constraintStart_toStartOf="@+id/activity_detalhes_lancamento_tipogasto"
+            app:layout_constraintTop_toBottomOf="@+id/activity_detalhes_lancamento_tipogasto"
+            app:layout_constraintHorizontal_bias="0.0"
+            tools:text="Caixa economica federal" />
+
+        <TextView
+            android:id="@+id/activity_detalhes_lancamento_valor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@drawable/plano_de_fundo_arredondado"
+            android:elevation="10dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:padding="8dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textColor="@android:color/holo_green_dark"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/activity_detalhes_lancamento_nome"
+            app:layout_constraintStart_toStartOf="@+id/activity_detalhes_lancamento_nome"
+            app:layout_constraintTop_toBottomOf="@+id/activity_detalhes_lancamento_nome"
+            app:layout_constraintHorizontal_bias="1.0"
+            tools:text="R$ 1299,99" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
