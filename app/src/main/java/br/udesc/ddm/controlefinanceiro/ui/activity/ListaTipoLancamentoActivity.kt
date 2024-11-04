@@ -57,9 +57,9 @@ class ListaTipoLancamentoActivity : AppCompatActivity() {
     }
 
     private suspend fun buscaTodosTipos() {
-        tipoLancamentoDao.buscaTodos().collect { tiposLancamentos ->
-            adapter.atualiza(tiposLancamentos)
-        }
+//        tipoLancamentoDao.buscaTodos().collect { tiposLancamentos ->
+//            adapter.atualiza(tiposLancamentos)
+//        }
     }
 
     private fun configuraRecyclerView() {

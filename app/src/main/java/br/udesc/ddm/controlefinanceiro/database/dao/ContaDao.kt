@@ -12,7 +12,7 @@ import java.math.BigDecimal
 @Dao
 interface ContaDao {
     @Query("SELECT * FROM Conta")
-    fun buscaTodas(): Flow<List<Conta>>
+    fun buscaTodas(): List<Conta>
 
     @Query("SELECT nome FROM Conta")
     fun buscaTodosSpinner(): List<String>

@@ -57,9 +57,9 @@ class ListaLancamentoActivity : AppCompatActivity() {
     }
 
     private suspend fun buscaTodosLancamentos() {
-        lancamentoDao.buscaTodos().collect { lancamentos ->
-            adapter.atualiza(lancamentos)
-        }
+//        lancamentoDao.buscaTodos().collect { lancamentos ->
+//            adapter.atualiza(lancamentos)
+//        }
     }
 
     private fun configuraRecyclerView() {

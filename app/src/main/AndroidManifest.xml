@@ -18,25 +18,25 @@
             android:name=".ui.activity.CadastrarLancamentoActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.DetalhesLancamentoActivity"
+            android:name=".ui.activity.CadastrarTipoLancamentoActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.ListaLancamentoActivity"
+            android:name=".ui.activity.CadastrarContaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.DetalhesLancamentoActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activity.DetalhesTipoLancamentoActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.ListaTipoLancamentoActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.activity.CadastrarTipoLancamentoActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.activity.DetalhesContaActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.CadastrarContaActivity"
+            android:name=".ui.activity.ListaLancamentoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.ListaTipoLancamentoActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activity.ListaContaActivity"

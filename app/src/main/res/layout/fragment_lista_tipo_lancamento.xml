@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment">
+    tools:context=".ui.fragments.TipoLancamentoFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/fragment_home_lista_contas_recyclerView"
+        android:id="@+id/fragment_lista_tipo_lancamento_recyclerView"
         android:layout_width="0dp"
-        android:layout_height="600dp"
+        android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -18,7 +18,7 @@
         tools:listitem="@layout/item_conta" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fragment_lista_contas_fab"
+        android:id="@+id/fragment_lista_tipo_lancamento_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
@@ -30,5 +30,4 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_action_add" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

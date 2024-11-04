@@ -60,9 +60,9 @@ class ListaContaActivity : AppCompatActivity() {
 
     private suspend fun buscaTodasContas() {
         Log.i("ListaContaActivity", "buscaTodasContas")
-        contaDao.buscaTodas().collect { contas ->
-            adapter.atualiza(contas)
-        }
+//        contaDao.buscaTodas().collect { contas ->
+//            adapter.atualiza(contas)
+//        }
     }
 
     private fun configuraRecyclerView() {

@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface LancamentoDao {
     @Query("SELECT * FROM Lancamento")
-    fun buscaTodos(): Flow<List<Lancamento>>
+    fun buscaTodos(): List<Lancamento>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun salva(vararg lancamento: Lancamento)

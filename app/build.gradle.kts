@@ -44,6 +44,7 @@ dependencies {
     implementation("io.coil-kt:coil:1.2.2")
     implementation(libs.androidx.legacy.support.v4)
     implementation(libs.androidx.fragment.ktx)
+    implementation(libs.common)
 
     val room_version = "2.3.0"
     val lifecycle_version = "2.4.0"
@@ -53,6 +54,10 @@ dependencies {
     kapt("androidx.room:room-compiler:$room_version")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version")
     implementation("androidx.datastore:datastore-preferences:1.0.0")
+
+    implementation("com.google.code.gson:gson:2.8.6")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

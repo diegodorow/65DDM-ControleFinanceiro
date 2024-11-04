@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 interface TipoLancamentoDao {
 
     @Query("SELECT * FROM TipoLancamento")
-    fun buscaTodos(): Flow<List<TipoLancamento>>
+    fun buscaTodos(): List<TipoLancamento>
 
     @Query("SELECT nome FROM TipoLancamento")
     fun buscaTodosSpinner(): List<String>
