@@ -2,10 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.CadastrarLancamentoActivity">
+    tools:context=".ui.fragments.CadastrarLancamentoFragment">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout_lancamento"
@@ -18,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/activity_cadastro_lancamento_nome"
+            android:id="@+id/fragment_cadastro_lancamento_nome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/txt_lancamento"
@@ -26,7 +25,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/activity_cadastro_lancamento_textinput_valor"
+        android:id="@+id/fragment_cadastro_lancamento_textinput_valor"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -36,7 +35,7 @@
         app:layout_constraintTop_toBottomOf="@id/textInputLayout_lancamento">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/activity_cadastro_lancamento_valor"
+            android:id="@+id/fragment_cadastro_lancamento_valor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Valor"
@@ -52,8 +51,8 @@
         android:layout_marginTop="16dp"
         android:text="Conta"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@id/activity_cadastro_lancamento_textinput_valor"
-        app:layout_constraintTop_toBottomOf="@id/activity_cadastro_lancamento_textinput_valor"
+        app:layout_constraintStart_toStartOf="@id/fragment_cadastro_lancamento_textinput_valor"
+        app:layout_constraintTop_toBottomOf="@id/fragment_cadastro_lancamento_textinput_valor"
         tools:layout_editor_absoluteX="24dp"
         tools:layout_editor_absoluteY="84dp" />
 
@@ -89,7 +88,7 @@
 
 
     <Button
-        android:id="@+id/activity_formulario_lancamento_botao_salvar"
+        android:id="@+id/fragment_formulario_lancamento_botao_salvar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -101,15 +100,15 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/activity_formulario_lancamento_botao_capturar_imagem"
+        android:id="@+id/fragment_formulario_lancamento_botao_capturar_imagem"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/txt_capturar_imagem"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/activity_formulario_lancamento_botao_salvar"
-        app:layout_constraintStart_toStartOf="@id/activity_formulario_lancamento_botao_salvar"
-        app:layout_constraintTop_toBottomOf="@id/activity_formulario_lancamento_botao_salvar"
+        app:layout_constraintEnd_toEndOf="@id/fragment_formulario_lancamento_botao_salvar"
+        app:layout_constraintStart_toStartOf="@id/fragment_formulario_lancamento_botao_salvar"
+        app:layout_constraintTop_toBottomOf="@id/fragment_formulario_lancamento_botao_salvar"
         app:layout_constraintVertical_bias="0.0" />
 
     <androidx.camera.view.PreviewView
@@ -118,17 +117,17 @@
         android:layout_height="match_parent"
         android:layout_marginTop="550dp"
         android:visibility="gone"
-        app:layout_constraintStart_toStartOf="@id/activity_formulario_lancamento_botao_capturar_imagem"
-        app:layout_constraintTop_toBottomOf="@id/activity_formulario_lancamento_botao_capturar_imagem" />
+        app:layout_constraintStart_toStartOf="@id/fragment_formulario_lancamento_botao_capturar_imagem"
+        app:layout_constraintTop_toBottomOf="@id/fragment_formulario_lancamento_botao_capturar_imagem" />
 
     <ImageView
         android:id="@+id/image_view_foto"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:visibility="gone"
-        android:scaleType="centerCrop"
         android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="@id/activity_formulario_lancamento_botao_capturar_imagem"
-        app:layout_constraintTop_toBottomOf="@id/activity_formulario_lancamento_botao_capturar_imagem"/>
+        android:scaleType="centerCrop"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@id/fragment_formulario_lancamento_botao_capturar_imagem"
+        app:layout_constraintTop_toBottomOf="@id/fragment_formulario_lancamento_botao_capturar_imagem" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

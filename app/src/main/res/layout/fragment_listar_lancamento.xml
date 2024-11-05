@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.LancamentoFragment">
+    tools:context=".ui.fragments.ListarLancamentoFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragment_lista_lancamentos_recyclerView"

@@ -1,4 +1,4 @@
-package br.udesc.ddm.controlefinanceiro.ui.activity
+package br.udesc.ddm.controlefinanceiro.ui.fragments
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -7,11 +7,13 @@ import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ImageView
-import androidx.appcompat.app.AppCompatActivity
+import android.widget.Toast
 import androidx.camera.core.AspectRatio
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -21,38 +23,27 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.lifecycleScope
-import br.udesc.ddm.controlefinanceiro.database.AppDatabase
-import br.udesc.ddm.controlefinanceiro.database.dao.ContaDao
-import br.udesc.ddm.controlefinanceiro.database.dao.LancamentoDao
-import br.udesc.ddm.controlefinanceiro.database.dao.TipoLancamentoDao
-import br.udesc.ddm.controlefinanceiro.databinding.ActivityCadastrarLancamentoBinding
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import br.udesc.ddm.controlefinanceiro.databinding.FragmentCadastrarLancamentoBinding
 import br.udesc.ddm.controlefinanceiro.model.Lancamento
-import kotlinx.coroutines.launch
+import br.udesc.ddm.controlefinanceiro.viewModel.ContaViewModel
+import br.udesc.ddm.controlefinanceiro.viewModel.LancamentoViewModel
+import br.udesc.ddm.controlefinanceiro.viewModel.TipoLancamentoViewModel
 import java.io.File
 import java.io.FileOutputStream
 import java.math.BigDecimal
 
-class CadastrarLancamentoActivity : AppCompatActivity() {
+class CadastrarLancamentoFragment : Fragment() {
+    private var _binding: FragmentCadastrarLancamentoBinding? = null
+    private lateinit var lancamentoViewModel: LancamentoViewModel
+    private lateinit var contaViewModel: ContaViewModel
+    private lateinit var tipoLancamentoViewModel: TipoLancamentoViewModel
 
-    private val binding by lazy {
-        ActivityCadastrarLancamentoBinding.inflate(layoutInflater)
-    }
+    private val binding get() = _binding!!
 
-    private val lancamentoDao: LancamentoDao by lazy {
-        val db = AppDatabase.instancia(this)
-        db.lancamentoDao()
-    }
-
-    private val tipoLancamentoDao: TipoLancamentoDao by lazy {
-        val db = AppDatabase.instancia(this)
-        db.tipoLancamentoDao()
-    }
-
-    private val contaDao: ContaDao by lazy {
-        val db = AppDatabase.instancia(this)
-        db.contaDao()
-    }
+    private lateinit var botaoCadastrar: Button
+    private var lancamentoId = 0L
 
     private lateinit var previewView: PreviewView
     private var imageCapture: ImageCapture? = null
@@ -61,52 +52,78 @@ class CadastrarLancamentoActivity : AppCompatActivity() {
     private lateinit var currentPhotoPath: String
     private lateinit var botaoAbrirCamera: Button
 
-    private var lancamentoId = 0L
-    val listaConta = contaDao.buscaTodosSpinner()
-    val listaTiposGasto = tipoLancamentoDao.buscaTodosSpinner()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(binding.root)
-        title = "Cadastrar lançamento"
+    private lateinit var listaConta: List<String>
+    private lateinit var listaTiposGasto: List<String>
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        lancamentoViewModel = ViewModelProvider(this).get(LancamentoViewModel::class.java)
+        contaViewModel = ViewModelProvider(this).get(ContaViewModel::class.java)
+        tipoLancamentoViewModel = ViewModelProvider(this).get(TipoLancamentoViewModel::class.java)
+
+        _binding = FragmentCadastrarLancamentoBinding.inflate(inflater, container, false)
+        val root: View = binding.root
+
+        botaoCadastrar = binding.fragmentFormularioLancamentoBotaoSalvar
+
+        listaConta = contaViewModel.buscaTodosParaSpinner()
+        listaTiposGasto = tipoLancamentoViewModel.buscaTodosParaSpinner()
+
         previewView = binding.previewView
         imageViewFoto = binding.imageViewFoto
-        botaoAbrirCamera = binding.activityFormularioLancamentoBotaoCapturarImagem
-        configuraSpinner()
-        configuraBotaoSalvar()
-        tentaCarregarLancamento()
+        botaoAbrirCamera = binding.fragmentFormularioLancamentoBotaoCapturarImagem
+        currentPhotoPath = ""
 
+        configuraBotaoSalvar()
+        configuraSpinner()
         startCamera()
+
+        if (!allPermissionsGranted()) {
+            requestPermissions()
+        }
 
         botaoAbrirCamera.setOnClickListener {
             takePhoto()
         }
-    }
 
-    override fun onResume() {
-        super.onResume()
-        tentaBuscarLancamento()
+        return root
     }
 
     private fun configuraBotaoSalvar() {
-        val botaoSalvar = binding.activityFormularioLancamentoBotaoSalvar
+        val botaoSalvar = binding.fragmentFormularioLancamentoBotaoSalvar
 
         botaoSalvar.setOnClickListener {
-            lifecycleScope.launch {
-                val lancamentoNovo = criaLancamento()
-                lancamentoDao.salva(lancamentoNovo)
-                finish()
+            val lancamentoNovo = criaLancamento()
+            if (lancamentoNovo.nome.isNotEmpty()) {
+                lancamentoViewModel.cadastrarLancamento(lancamentoNovo)
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "Preencha todos os campos!",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
             }
         }
     }
 
+    private fun verificaSaldoConta(contaId: Long) {
+        val saldoConta = contaViewModel.getSaldoConta(contaId);
+        if (saldoConta <= BigDecimal.ZERO) {
+
+        }
+    }
+
     private fun criaLancamento(): Lancamento {
-        val campoNome = binding.activityCadastroLancamentoNome
+        val campoNome = binding.fragmentCadastroLancamentoNome
         val nome = campoNome.text.toString()
         val conta = binding.spConta.selectedItem.toString()
         val tipoGasto = binding.spTipoGasto.selectedItem.toString()
 
-        val campoValor = binding.activityCadastroLancamentoValor
+        val campoValor = binding.fragmentCadastroLancamentoValor
         val valorEmTexto = campoValor.text.toString()
         val valor = if (valorEmTexto.isBlank()) {
             BigDecimal.ZERO
@@ -114,7 +131,6 @@ class CadastrarLancamentoActivity : AppCompatActivity() {
             BigDecimal(valorEmTexto)
         }
 
-        currentPhotoPath = ""
         val textoDiretorioImagem = currentPhotoPath
 
         Log.i("CadastrarLancamentoActivity", textoDiretorioImagem)
@@ -129,53 +145,34 @@ class CadastrarLancamentoActivity : AppCompatActivity() {
         )
     }
 
-    private fun tentaCarregarLancamento() {
-        lancamentoId = intent.getLongExtra(CHAVE_LANCAMENTO_ID, 0L)
-    }
-
-    private fun tentaBuscarLancamento() {
-        lifecycleScope.launch {
-            lancamentoDao.buscaPorId(lancamentoId).collect {
-                it?.let { lancamentoEncontrado ->
-                    title = "Alterar lançamento"
-                    preencheCampos(lancamentoEncontrado)
-                }
-            }
-        }
-    }
-
-    private fun preencheCampos(lancamento: Lancamento) {
-        binding.activityCadastroLancamentoNome.setText(lancamento.nome)
-        binding.activityCadastroLancamentoValor.setText(lancamento.valor.toString())
-
-        val idConta: Int = listaConta.indexOf(lancamento.banco)
-        binding.spConta.setSelection(idConta)
-        Log.i("CadastrarLancamentoActivity", "preencheCampos: idConta=$idConta")
-
-        val idTipoGasto: Int = listaTiposGasto.indexOf(lancamento.tipo)
-        binding.spTipoGasto.setSelection(idTipoGasto)
-        Log.i("CadastrarLancamentoActivity", "preencheCampos: idTipoGasto=$idTipoGasto")
-    }
-
     private fun configuraSpinner() {
 
         val spListaConta = binding.spConta
-//        val listaConta = contaDao.buscaTodosSpinner()
-        val adapterListaConta =
-            ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listaConta)
+
+        val adapterListaConta = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_item,
+            listaConta
+        )
+
         adapterListaConta.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spListaConta.adapter = adapterListaConta
 
         val spListaTipoGasto = binding.spTipoGasto
-//        val listaTiposGasto = tipoLancamentoDao.buscaTodosSpinner()
-        val adapterListaTipoGasto =
-            ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listaTiposGasto)
+
+        val adapterListaTipoGasto = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_item,
+            listaTiposGasto
+        )
+
         adapterListaTipoGasto.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spListaTipoGasto.adapter = adapterListaTipoGasto
     }
 
+
     private fun startCamera() {
-        val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
+        val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
         cameraProviderFuture.addListener({
             val cameraProvider = cameraProviderFuture.get()
             val preview = Preview.Builder().build().also {
@@ -194,24 +191,30 @@ class CadastrarLancamentoActivity : AppCompatActivity() {
             } catch (exc: Exception) {
                 Log.e("CameraXApp", "Erro ao inicializar a câmera: ${exc.message}", exc)
             }
-        }, ContextCompat.getMainExecutor(this))
+        }, ContextCompat.getMainExecutor(requireContext()))
     }
 
     private fun takePhoto() {
         val imageCapture = imageCapture ?: return
-        val photoFile =
-            File(this.externalMediaDirs.firstOrNull(), "${System.currentTimeMillis()}.jpg")
+
+        val photoFile = File(
+            requireContext().externalMediaDirs.firstOrNull(),
+            "${System.currentTimeMillis()}.jpg"
+        )
         val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
 
+        Log.i("CameraApp", "takePhoto")
         imageCapture.takePicture(
             outputOptions,
-            ContextCompat.getMainExecutor(this),
+            ContextCompat.getMainExecutor(requireContext()),
             object : ImageCapture.OnImageSavedCallback {
+
                 override fun onError(exc: ImageCaptureException) {
                     Log.e("CameraApp", "Erro ao capturar imagem: ${exc.message}", exc)
                 }
 
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
+                    Log.i("CameraApp", "onImageSaved")
                     val bitmap = BitmapFactory.decodeFile(photoFile.absolutePath)
                     val rotatedBitmap = rotateBitmapFixed(bitmap)
                     imageViewFoto.setImageBitmap(rotatedBitmap)
@@ -222,6 +225,8 @@ class CadastrarLancamentoActivity : AppCompatActivity() {
                 }
             }
         )
+
+        Log.i("CameraApp", "currentPhotoPath = " + currentPhotoPath)
     }
 
     private fun rotateBitmapFixed(bitmap: Bitmap): Bitmap {
@@ -231,22 +236,26 @@ class CadastrarLancamentoActivity : AppCompatActivity() {
     }
 
     private fun allPermissionsGranted() = arrayOf(Manifest.permission.CAMERA).all {
-        ContextCompat.checkSelfPermission(this, it) == PackageManager.PERMISSION_GRANTED
+        ContextCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED
     }
 
     private fun requestPermissions() {
-        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), 10)
+        ActivityCompat.requestPermissions(
+            requireActivity(),
+            arrayOf(Manifest.permission.CAMERA),
+            10
+        )
     }
 
     private fun saveBitmapToExternalStorage(bitmap: Bitmap): String? {
-        val context = this
-        val photoDir = File(context.getExternalFilesDir(null), "medicamento_fotos")
+        val context = requireContext()
+        val photoDir = File(context.getExternalFilesDir(null), "lancamento_fotos")
 
         if (!photoDir.exists()) {
             photoDir.mkdirs()
         }
 
-        val photoFile = File(photoDir, "medicamento_${System.currentTimeMillis()}.jpg")
+        val photoFile = File(photoDir, "lancamento_${System.currentTimeMillis()}.jpg")
         return try {
             val outputStream = FileOutputStream(photoFile)
             bitmap.compress(Bitmap.CompressFormat.JPEG, 80, outputStream)
@@ -258,5 +267,4 @@ class CadastrarLancamentoActivity : AppCompatActivity() {
             null
         }
     }
-
 }

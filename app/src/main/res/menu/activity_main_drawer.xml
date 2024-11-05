@@ -4,18 +4,25 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
-<item
+        <item
             android:id="@+id/nav_lista_contas_fragment"
             android:icon="@drawable/ic_menu_camera"
             android:title="@string/menu_listacontas" />
+
         <item
             android:id="@+id/nav_lista_tiposlancamentos"
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/menu_tiposlancamento" />
+
         <item
             android:id="@+id/nav_lista_lancamentos"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/menu_lancamento" />
+
+        <item
+            android:id="@+id/nav_pesquisa_acao"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/menu_pesquisa" />
 
     </group>
 </menu>

@@ -11,5 +11,6 @@ data class Lancamento(
     val nome: String,
     val banco: String,
     val tipo: String,
-    val valor: BigDecimal
+    val valor: BigDecimal,
+    val diretorioImagem: String? = null
 )

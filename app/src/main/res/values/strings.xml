@@ -13,10 +13,14 @@
     <string name="menu_listacontas">Lista de Contas</string>
     <string name="menu_tiposlancamento">Tipos de lançamentos</string>
     <string name="menu_lancamento">Lançamentos</string>
+    <string name="menu_pesquisa">Pesquisa ação</string>
 
     <string name="txt_contas">Contas</string>
     <string name="txt_conta">Conta</string>
     <string name="txt_salvar">Salvar</string>
+    <string name="txt_capturar_imagem">Caputrar imagem</string>
     <string name="txt_tipolancamento">Tipo de lançamento</string>
     <string name="txt_lancamento">Lançamento</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -27,4 +27,10 @@ class LancamentoViewModel(application: Application) : AndroidViewModel(applicati
             _lancamentos.value = lancamentoDao.buscaTodos()
         }
     }
+
+    fun cadastrarLancamento(lancamentoNovo: Lancamento) {
+        viewModelScope.launch {
+            lancamentoDao.salva(lancamentoNovo)
+        }
+    }
 }

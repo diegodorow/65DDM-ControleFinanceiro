@@ -9,16 +9,16 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import br.udesc.ddm.controlefinanceiro.databinding.FragmentListaContaBinding
+import br.udesc.ddm.controlefinanceiro.databinding.FragmentListarContaBinding
 import br.udesc.ddm.controlefinanceiro.recyclerview.adapter.ContaAdapter
 import br.udesc.ddm.controlefinanceiro.ui.activity.CHAVE_CONTA_ID
 import br.udesc.ddm.controlefinanceiro.ui.activity.DetalhesContaActivity
 import br.udesc.ddm.controlefinanceiro.viewModel.ContaViewModel
 
 
-class ContaFragment : Fragment() {
+class ListarContaFragment : Fragment() {
 
-    private var _binding: FragmentListaContaBinding? = null
+    private var _binding: FragmentListarContaBinding? = null
 
     private val binding get() = _binding!!
 
@@ -31,7 +31,7 @@ class ContaFragment : Fragment() {
     ): View {
         val listaContaViewModel = ViewModelProvider(this).get(ContaViewModel::class.java)
 
-        _binding = FragmentListaContaBinding.inflate(inflater, container, false)
+        _binding = FragmentListarContaBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val recyclerView = binding.fragmentListaContasRecyclerView

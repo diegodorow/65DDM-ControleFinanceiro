@@ -7,57 +7,45 @@
 
     <fragment
         android:id="@+id/nav_lista_contas_fragment"
-        android:name="br.udesc.ddm.controlefinanceiro.ui.fragments.ContaFragment"
+        android:name="br.udesc.ddm.controlefinanceiro.ui.fragments.ListarContaFragment"
         android:label="@string/menu_listacontas"
-        tools:layout="@layout/fragment_lista_conta" />
+        tools:layout="@layout/fragment_listar_conta" />
 
     <fragment
         android:id="@+id/nav_lista_tiposlancamentos"
-        android:name="br.udesc.ddm.controlefinanceiro.ui.fragments.TipoLancamentoFragment"
+        android:name="br.udesc.ddm.controlefinanceiro.ui.fragments.ListarTipoLancamentoFragment"
         android:label="@string/menu_tiposlancamento"
-        tools:layout="@layout/fragment_lista_tipo_lancamento" />
+        tools:layout="@layout/fragment_listar_tipo_lancamento" />
 
     <fragment
         android:id="@+id/nav_lista_lancamentos"
-        android:name="br.udesc.ddm.controlefinanceiro.ui.fragments.LancamentoFragment"
+        android:name="br.udesc.ddm.controlefinanceiro.ui.fragments.ListarLancamentoFragment"
         android:label="@string/menu_lancamento"
-        tools:layout="@layout/fragment_lista_lancamento" />
+        tools:layout="@layout/fragment_listar_lancamento" />
 
-    <!--    <activity-->
-    <!--        android:id="@+id/nav_lista_contas"-->
-    <!--        android:name="br.udesc.ddm.controlefinanceiro.ui.activity.ListaContaActivity"-->
-    <!--        android:label="@string/menu_listacontas"-->
-    <!--        tools:layout="@layout/activity_lista_conta" />-->
+    <fragment
+        android:id="@+id/nav_pesquisa_acao"
+        android:name="br.udesc.ddm.controlefinanceiro.ui.fragments.PesquisaAcaoFragment"
+        android:label="@string/menu_pesquisa"
+        tools:layout="@layout/fragment_pesquisa_acao" />
 
-    <!--    <activity-->
-    <!--        android:id="@+id/nav_lista_tiposlancamentos"-->
-    <!--        android:name="br.udesc.ddm.controlefinanceiro.ui.activity.ListaTipoLancamentoActivity"-->
-    <!--        android:label="@string/menu_tiposlancamento"-->
-    <!--        tools:layout="@layout/activity_lista_tipo_lancamento" />-->
-
-    <!--    <activity-->
-    <!--        android:id="@+id/nav_lista_lancamentos"-->
-    <!--        android:name="br.udesc.ddm.controlefinanceiro.ui.activity.ListaLancamentoActivity"-->
-    <!--        android:label="@string/menu_lancamento"-->
-    <!--        tools:layout="@layout/activity_lista_lancamento" />-->
-
-    <activity
+    <fragment
         android:id="@+id/nav_cadastrar_conta"
-        android:name="br.udesc.ddm.controlefinanceiro.ui.activity.CadastrarContaActivity"
+        android:name="br.udesc.ddm.controlefinanceiro.ui.fragments.CadastrarContaFragment"
         android:label="@string/menu_listacontas"
-        tools:layout="@layout/activity_cadastrar_conta" />
+        tools:layout="@layout/fragment_cadastrar_conta" />
 
-    <activity
+    <fragment
         android:id="@+id/nav_cadastrar_tipo_lancamento"
-        android:name="br.udesc.ddm.controlefinanceiro.ui.activity.CadastrarTipoLancamentoActivity"
+        android:name="br.udesc.ddm.controlefinanceiro.ui.fragments.CadastrarTipoLancamentoFragment"
         android:label="@string/menu_tiposlancamento"
-        tools:layout="@layout/activity_cadastrar_tipo_lancamento" />
+        tools:layout="@layout/fragment_cadastrar_tipo_lancamento" />
 
-    <activity
+    <fragment
         android:id="@+id/nav_cadastrar_lancamento"
-        android:name="br.udesc.ddm.controlefinanceiro.ui.activity.CadastrarLancamentoActivity"
+        android:name="br.udesc.ddm.controlefinanceiro.ui.fragments.CadastrarLancamentoFragment"
         android:label="@string/menu_lancamento"
-        tools:layout="@layout/activity_cadastrar_lancamento" />
+        tools:layout="@layout/fragment_cadastrar_lancamento" />
 
     <activity
         android:id="@+id/nav_detalhes_conta"

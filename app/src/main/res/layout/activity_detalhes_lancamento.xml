@@ -12,6 +12,17 @@
         android:layout_height="wrap_content"
         tools:context=".ui.activity.DetalhesLancamentoActivity">
 
+        <ImageView
+            android:id="@+id/activity_detalhes_lancamento_imagem"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:contentDescription="Imagem da conta"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@drawable/imagem_padrao" />
+
         <TextView
             android:id="@+id/activity_detalhes_lancamento_nome"
             android:layout_width="0dp"
@@ -21,8 +32,8 @@
             android:textSize="28sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/activity_detalhes_lancamento_imagem"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintVertical_bias="0.0"
             tools:text="Nome lançamento" />

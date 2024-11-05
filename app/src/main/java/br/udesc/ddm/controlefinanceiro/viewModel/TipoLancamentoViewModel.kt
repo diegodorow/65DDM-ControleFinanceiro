@@ -28,4 +28,14 @@ class TipoLancamentoViewModel(application: Application) : AndroidViewModel(appli
             _tiposLancamentos.value = tipoLancamentoDao.buscaTodos()
         }
     }
+
+    fun cadastrarTipoLancamento(tipoLancamentoNovo: TipoLancamento) {
+        viewModelScope.launch {
+            tipoLancamentoDao.salva(tipoLancamentoNovo)
+        }
+    }
+
+    fun buscaTodosParaSpinner() : List<String> {
+        return tipoLancamentoDao.buscaTodosSpinner()
+    }
 }

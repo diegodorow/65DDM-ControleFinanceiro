@@ -9,15 +9,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import br.udesc.ddm.controlefinanceiro.databinding.FragmentListaTipoLancamentoBinding
+import br.udesc.ddm.controlefinanceiro.databinding.FragmentListarTipoLancamentoBinding
 import br.udesc.ddm.controlefinanceiro.recyclerview.adapter.TipoAdapter
 import br.udesc.ddm.controlefinanceiro.ui.activity.CHAVE_TIPOLANCAMENTO_ID
 import br.udesc.ddm.controlefinanceiro.ui.activity.DetalhesTipoLancamentoActivity
 import br.udesc.ddm.controlefinanceiro.viewModel.TipoLancamentoViewModel
 
-class TipoLancamentoFragment : Fragment() {
+class ListarTipoLancamentoFragment : Fragment() {
 
-    private var _binding: FragmentListaTipoLancamentoBinding? = null
+    private var _binding: FragmentListarTipoLancamentoBinding? = null
 
     private val binding get() = _binding!!
 
@@ -31,7 +31,7 @@ class TipoLancamentoFragment : Fragment() {
         val tipoLancamentoViewModel =
             ViewModelProvider(this).get(TipoLancamentoViewModel::class.java)
 
-        _binding = FragmentListaTipoLancamentoBinding.inflate(inflater, container, false)
+        _binding = FragmentListarTipoLancamentoBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val recyclerView = binding.fragmentListaTipoLancamentoRecyclerView
@@ -67,6 +67,6 @@ class TipoLancamentoFragment : Fragment() {
 
     private fun vaiParaFormularioTipoLancamento() {
         Navigation.findNavController(binding.root)
-            .navigate(br.udesc.ddm.controlefinanceiro.R.id.nav_lista_tiposlancamentos)
+            .navigate(br.udesc.ddm.controlefinanceiro.R.id.nav_cadastrar_tipo_lancamento)
     }
 }

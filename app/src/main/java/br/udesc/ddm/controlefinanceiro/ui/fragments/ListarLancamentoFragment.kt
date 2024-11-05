@@ -9,15 +9,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import br.udesc.ddm.controlefinanceiro.databinding.FragmentListaLancamentoBinding
+import br.udesc.ddm.controlefinanceiro.databinding.FragmentListarLancamentoBinding
 import br.udesc.ddm.controlefinanceiro.recyclerview.adapter.LancamentoAdapter
 import br.udesc.ddm.controlefinanceiro.ui.activity.CHAVE_LANCAMENTO_ID
 import br.udesc.ddm.controlefinanceiro.ui.activity.DetalhesLancamentoActivity
 import br.udesc.ddm.controlefinanceiro.viewModel.LancamentoViewModel
 
-class LancamentoFragment : Fragment() {
+class ListarLancamentoFragment : Fragment() {
 
-    private var _binding: FragmentListaLancamentoBinding? = null
+    private var _binding: FragmentListarLancamentoBinding? = null
 
     private val binding get() = _binding!!
 
@@ -30,7 +30,7 @@ class LancamentoFragment : Fragment() {
     ): View {
         val lancamentoViewModel = ViewModelProvider(this).get(LancamentoViewModel::class.java)
 
-        _binding = FragmentListaLancamentoBinding.inflate(inflater, container, false)
+        _binding = FragmentListarLancamentoBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val recyclerView = binding.fragmentListaLancamentosRecyclerView
