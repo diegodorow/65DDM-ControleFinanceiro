@@ -9,9 +9,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.udesc.ddm.controlefinanceiro.databinding.FragmentPesquisaAcaoBinding
+import br.udesc.ddm.controlefinanceiro.model.NovaRespostaApi
 import br.udesc.ddm.controlefinanceiro.recyclerview.adapter.AcaoAPIAdapter
-import br.udesc.ddm.controlefinanceiro.model.AcaoAPI
-import br.udesc.ddm.controlefinanceiro.model.RespostaAPI
 import br.udesc.ddm.controlefinanceiro.retrofit.RetrofitInitializer
 import retrofit2.Call
 import retrofit2.Callback
@@ -23,7 +22,7 @@ class PesquisaAcaoFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var retrofitInitializer: RetrofitInitializer
-    private val listaAcoes = mutableListOf<AcaoAPI>()
+    private val listaAcoes = mutableListOf<String>()
     private lateinit var adapter: AcaoAPIAdapter
 
     override fun onCreateView(
@@ -66,32 +65,40 @@ class PesquisaAcaoFragment : Fragment() {
             Log.i("PesquisaAcaoFragment", "antes de fazer a call")
             val call = service.pesquisarAcao()
             Log.i("PesquisaAcaoFragment", "call: ${call.toString()}")
-            call.enqueue(object : Callback<RespostaAPI> {
-                override fun onResponse(call: Call<RespostaAPI>, response: Response<RespostaAPI>) {
+            call.enqueue(object : Callback<NovaRespostaApi> {
+                override fun onResponse(
+                    call: Call<NovaRespostaApi>,
+                    response: Response<NovaRespostaApi>
+                ) {
 
                     Log.i("PesquisaAcaoFragment", "onResponse")
                     if (response.isSuccessful) {
                         Log.i("PesquisaAcaoFragment", "isSuccessful")
                         response.body()?.let { respostaAPI ->
-//                            listaAcoes.addAll(respostaAPI.results)
+
                             adapter.notifyDataSetChanged()
                             Log.i("PesquisaAcaoFragment", "notifyDataSetChanged")
 
-                            if (respostaAPI.results.isNotEmpty()) {
+                            if (respostaAPI.stocks.isNotEmpty()) {
+                                listaAcoes.addAll(respostaAPI.stocks)
                                 Log.i("PesquisaAcaoFragment", "isNotEmpty")
                                 pagina++
                                 fetchPage()
                             }
                         }
                     } else {
-                        Log.i("PesquisaAcaoFragment", "else isSuccessful requireContext "
-                                + requireContext().toString() + ", response.errorBody() " + response.errorBody().toString())
+                        Log.i(
+                            "PesquisaAcaoFragment", "else isSuccessful requireContext "
+                                    + requireContext().toString() + ", response.errorBody() " + response.errorBody()
+                                .toString()
+                        )
                         Toast.makeText(requireContext(), response.message(), Toast.LENGTH_LONG)
                             .show()
                     }
                 }
 
-                override fun onFailure(call: Call<RespostaAPI>, t: Throwable) {
+                override fun onFailure(call: Call<NovaRespostaApi>, t: Throwable) {
+                    Log.i("PesquisaAcaoFragment", "else isSuccessful requireContext ${t.message}")
                     System.out.println(t.toString());
                     Toast.makeText(requireContext(), "${t.message}", Toast.LENGTH_LONG).show()
                 }

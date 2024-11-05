@@ -76,6 +76,7 @@ class DetalhesLancamentoActivity : AppCompatActivity() {
                         finish()
                     }
                 }
+
                 // Exibe a notificação
                 val titulo = "Lançamento removido"
                 val texto = "Este lançamento foi excluído com sucesso."

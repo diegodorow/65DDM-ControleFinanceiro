@@ -23,8 +23,17 @@ data class AcaoAPI(
     val logourl: String
 )
 
-data class RespostaAPI(
+data class oldRespostaAPI(
     val results: List<AcaoAPI>,
     val requestedAt : String,
     val took: String
+)
+
+data class StockAPI (
+    val nome : String
+)
+
+data class NovaRespostaApi(
+    val indexes: List<String>,
+    val stocks: List<String>
 )

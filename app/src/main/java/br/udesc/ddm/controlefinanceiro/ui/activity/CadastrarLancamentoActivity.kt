@@ -240,13 +240,13 @@ class CadastrarLancamentoActivity : AppCompatActivity() {
 
     private fun saveBitmapToExternalStorage(bitmap: Bitmap): String? {
         val context = this
-        val photoDir = File(context.getExternalFilesDir(null), "medicamento_fotos")
+        val photoDir = File(context.getExternalFilesDir(null), "lancamento_fotos")
 
         if (!photoDir.exists()) {
             photoDir.mkdirs()
         }
 
-        val photoFile = File(photoDir, "medicamento_${System.currentTimeMillis()}.jpg")
+        val photoFile = File(photoDir, "lancamento_${System.currentTimeMillis()}.jpg")
         return try {
             val outputStream = FileOutputStream(photoFile)
             bitmap.compress(Bitmap.CompressFormat.JPEG, 80, outputStream)

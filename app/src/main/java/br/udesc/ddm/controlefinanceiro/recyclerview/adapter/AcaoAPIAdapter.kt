@@ -9,7 +9,7 @@ import br.udesc.ddm.controlefinanceiro.R
 import br.udesc.ddm.controlefinanceiro.model.AcaoAPI
 
 class AcaoAPIAdapter(
-    private val acoes: MutableList<AcaoAPI>
+    private val acoes: MutableList<String>
 ) : RecyclerView.Adapter<AcaoAPIAdapter.AcaoViewHolder>() {
 
     inner class AcaoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -25,8 +25,8 @@ class AcaoAPIAdapter(
 
     override fun onBindViewHolder(holder: AcaoViewHolder, position: Int) {
         val acao = acoes[position]
-        holder.acaoNome.text = acao.shortName
-        holder.acaoDescricao.text = acao.longName
+        holder.acaoNome.text = acao
+//        holder.acaoDescricao.text = acao.longName
     }
 
     override fun getItemCount(): Int = acoes.size
