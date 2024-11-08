@@ -9,7 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import br.udesc.ddm.controlefinanceiro.R
 import br.udesc.ddm.controlefinanceiro.databinding.FragmentListarLancamentoBinding
+import br.udesc.ddm.controlefinanceiro.model.Lancamento
 import br.udesc.ddm.controlefinanceiro.recyclerview.adapter.LancamentoAdapter
 import br.udesc.ddm.controlefinanceiro.ui.activity.CHAVE_LANCAMENTO_ID
 import br.udesc.ddm.controlefinanceiro.ui.activity.DetalhesLancamentoActivity
@@ -23,16 +25,30 @@ class ListarLancamentoFragment : Fragment() {
 
     private lateinit var adapter: LancamentoAdapter
 
+    private lateinit var lancamentoViewModel: LancamentoViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val lancamentoViewModel = ViewModelProvider(this).get(LancamentoViewModel::class.java)
+        lancamentoViewModel = ViewModelProvider(this).get(LancamentoViewModel::class.java)
 
         _binding = FragmentListarLancamentoBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        atualizaTela()
+
+        configuraFab()
+        return root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        atualizaTela()
+    }
+
+    private fun atualizaTela() {
         val recyclerView = binding.fragmentListaLancamentosRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
@@ -43,17 +59,18 @@ class ListarLancamentoFragment : Fragment() {
 
                 adapter.quandoClicaNoItem = {
                     Navigation.findNavController(binding.root)
-                        .navigate(br.udesc.ddm.controlefinanceiro.R.id.nav_detalhes_lancamento)
+                        .navigate(R.id.nav_detalhes_lancamento)
 
                     val intent = Intent(requireContext(), DetalhesLancamentoActivity::class.java)
                     intent.putExtra(CHAVE_LANCAMENTO_ID, it.id)
                     startActivity(intent)
                 }
+
+                val listaLancamentos: List<Lancamento> =
+                    lancamentoViewModel.buscarTodosLancamentos()
+                adapter.atualiza(listaLancamentos)
             }
         }
-
-        configuraFab()
-        return root
     }
 
     private fun configuraFab() {

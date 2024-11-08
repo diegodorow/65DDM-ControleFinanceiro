@@ -25,6 +25,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import br.udesc.ddm.controlefinanceiro.databinding.FragmentCadastrarLancamentoBinding
 import br.udesc.ddm.controlefinanceiro.model.Lancamento
 import br.udesc.ddm.controlefinanceiro.viewModel.ContaViewModel
@@ -107,6 +108,8 @@ class CadastrarLancamentoFragment : Fragment() {
                 )
                     .show()
             }
+            Navigation.findNavController(binding.root)
+                .navigate(br.udesc.ddm.controlefinanceiro.R.id.nav_lista_lancamentos)
         }
     }
 

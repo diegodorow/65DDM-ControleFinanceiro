@@ -1,5 +1,6 @@
 package br.udesc.ddm.controlefinanceiro.recyclerview.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -60,6 +61,7 @@ class ListaContasAdapter(
         holder.vincula(conta)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun atualiza(contas: List<Conta>) {
         this.contas.clear()
         this.contas.addAll(contas)

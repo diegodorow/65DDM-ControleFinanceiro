@@ -18,12 +18,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import br.udesc.ddm.controlefinanceiro.MainActivity
 import br.udesc.ddm.controlefinanceiro.R
-import br.udesc.ddm.controlefinanceiro.database.AppDatabase
 import br.udesc.ddm.controlefinanceiro.databinding.ActivityDetalhesLancamentoBinding
 import br.udesc.ddm.controlefinanceiro.model.Lancamento
+import br.udesc.ddm.controlefinanceiro.viewModel.LancamentoViewModel
 import kotlinx.coroutines.launch
 
 class DetalhesLancamentoActivity : AppCompatActivity() {
@@ -33,12 +34,12 @@ class DetalhesLancamentoActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityDetalhesLancamentoBinding.inflate(layoutInflater)
     }
-    private val lancamentoDao by lazy {
-        AppDatabase.instancia(this).lancamentoDao()
-    }
+
+    private lateinit var lancamentoViewModel: LancamentoViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        lancamentoViewModel = ViewModelProvider(this).get(LancamentoViewModel::class.java)
         setContentView(binding.root)
         tentaCarregarLancamento()
 
@@ -53,7 +54,7 @@ class DetalhesLancamentoActivity : AppCompatActivity() {
 
     private fun buscaLancamento() {
         lifecycleScope.launch {
-            lancamentoDao.buscaPorId(lancamentoId).collect { lancamentoCarregado ->
+            lancamentoViewModel.buscaPorId(lancamentoId).collect { lancamentoCarregado ->
                 lancamento = lancamentoCarregado
                 lancamento?.let {
                     preencheCampos(it)
@@ -72,7 +73,7 @@ class DetalhesLancamentoActivity : AppCompatActivity() {
             R.id.menu_detalhes_remover -> {
                 lancamento?.let {
                     lifecycleScope.launch {
-                        lancamentoDao.remove(it)
+                        lancamentoViewModel.remove(it)
                         finish()
                     }
                 }

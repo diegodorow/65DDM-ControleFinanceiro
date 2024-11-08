@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import br.udesc.ddm.controlefinanceiro.database.AppDatabase
 import br.udesc.ddm.controlefinanceiro.database.dao.LancamentoDao
 import br.udesc.ddm.controlefinanceiro.model.Lancamento
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class LancamentoViewModel(application: Application) : AndroidViewModel(application) {
@@ -32,5 +33,17 @@ class LancamentoViewModel(application: Application) : AndroidViewModel(applicati
         viewModelScope.launch {
             lancamentoDao.salva(lancamentoNovo)
         }
+    }
+
+    fun buscaPorId(lancamentoId: Long): Flow<Lancamento?> {
+        return lancamentoDao.buscaPorId(lancamentoId)
+    }
+
+    fun buscarTodosLancamentos(): List<Lancamento> {
+        return lancamentoDao.buscaTodos()
+    }
+
+    fun remove(lancamento: Lancamento) {
+        return lancamentoDao.remove(lancamento)
     }
 }

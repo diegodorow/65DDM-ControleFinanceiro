@@ -17,13 +17,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import br.udesc.ddm.controlefinanceiro.MainActivity
 import br.udesc.ddm.controlefinanceiro.R
-import br.udesc.ddm.controlefinanceiro.database.AppDatabase
 import br.udesc.ddm.controlefinanceiro.databinding.ActivityDetalhesContaBinding
 import br.udesc.ddm.controlefinanceiro.extensions.tentaCarregarImagem
 import br.udesc.ddm.controlefinanceiro.model.Conta
+import br.udesc.ddm.controlefinanceiro.viewModel.ContaViewModel
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
 
@@ -35,12 +36,12 @@ class DetalhesContaActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityDetalhesContaBinding.inflate(layoutInflater)
     }
-    private val contaDao by lazy {
-        AppDatabase.instancia(this).contaDao()
-    }
+
+    private lateinit var contaViewModel: ContaViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        contaViewModel = ViewModelProvider(this).get(ContaViewModel::class.java)
         setContentView(binding.root)
         tentaCarregarConta()
 
@@ -55,7 +56,7 @@ class DetalhesContaActivity : AppCompatActivity() {
 
     private fun buscaConta() {
         lifecycleScope.launch {
-            contaDao.buscaPorId(contaId).collect { contaEncontrada ->
+            contaViewModel.buscaPorId(contaId).collect { contaEncontrada ->
                 conta = contaEncontrada
                 conta?.let {
                     preencheCampos(it)
@@ -74,7 +75,7 @@ class DetalhesContaActivity : AppCompatActivity() {
             R.id.menu_detalhes_remover -> {
                 conta?.let {
                     lifecycleScope.launch {
-                        contaDao.remove(it)
+                        contaViewModel.remove(it)
                         finish()
                     }
                 }
@@ -102,7 +103,7 @@ class DetalhesContaActivity : AppCompatActivity() {
 
     private fun preencheCampos(contaCarregada: Conta) {
 
-        contaSaldo = contaDao.buscaSaldo(contaId)
+        contaSaldo = contaViewModel.getSaldoConta(contaId)
 
         with(binding) {
             activityDetalhesContaImagem.tentaCarregarImagem(contaCarregada.imagem)

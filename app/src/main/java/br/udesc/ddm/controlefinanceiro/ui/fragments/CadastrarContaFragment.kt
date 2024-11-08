@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import br.udesc.ddm.controlefinanceiro.databinding.FragmentCadastrarContaBinding
 import br.udesc.ddm.controlefinanceiro.model.Conta
 import br.udesc.ddm.controlefinanceiro.viewModel.ContaViewModel
@@ -51,6 +52,9 @@ class CadastrarContaFragment : Fragment() {
                 )
                     .show()
             }
+
+            Navigation.findNavController(binding.root)
+                .navigate(br.udesc.ddm.controlefinanceiro.R.id.nav_lista_contas_fragment)
         }
     }
 

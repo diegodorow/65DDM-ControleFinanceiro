@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import br.udesc.ddm.controlefinanceiro.databinding.FragmentCadastrarTipoLancamentoBinding
 import br.udesc.ddm.controlefinanceiro.model.TipoLancamento
 import br.udesc.ddm.controlefinanceiro.ui.activity.TIPO_ENTRADA
@@ -61,6 +62,9 @@ class CadastrarTipoLancamentoFragment : Fragment() {
                         .show()
                 }
             }
+
+            Navigation.findNavController(binding.root)
+                .navigate(br.udesc.ddm.controlefinanceiro.R.id.nav_lista_tiposlancamentos)
         }
     }
 

@@ -9,7 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import br.udesc.ddm.controlefinanceiro.R
 import br.udesc.ddm.controlefinanceiro.databinding.FragmentListarTipoLancamentoBinding
+import br.udesc.ddm.controlefinanceiro.model.TipoLancamento
 import br.udesc.ddm.controlefinanceiro.recyclerview.adapter.TipoAdapter
 import br.udesc.ddm.controlefinanceiro.ui.activity.CHAVE_TIPOLANCAMENTO_ID
 import br.udesc.ddm.controlefinanceiro.ui.activity.DetalhesTipoLancamentoActivity
@@ -23,17 +25,31 @@ class ListarTipoLancamentoFragment : Fragment() {
 
     private lateinit var adapter: TipoAdapter
 
+    private lateinit var tipoLancamentoViewModel: TipoLancamentoViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val tipoLancamentoViewModel =
+        tipoLancamentoViewModel =
             ViewModelProvider(this).get(TipoLancamentoViewModel::class.java)
 
         _binding = FragmentListarTipoLancamentoBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        atualizaTela()
+
+        configuraFab()
+        return root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        atualizaTela()
+    }
+
+    private fun atualizaTela() {
         val recyclerView = binding.fragmentListaTipoLancamentoRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
@@ -44,18 +60,19 @@ class ListarTipoLancamentoFragment : Fragment() {
 
                 adapter.quandoClicaNoItem = {
                     Navigation.findNavController(binding.root)
-                        .navigate(br.udesc.ddm.controlefinanceiro.R.id.nav_detalhes_tipo_lancamento)
+                        .navigate(R.id.nav_detalhes_tipo_lancamento)
 
                     val intent =
                         Intent(requireContext(), DetalhesTipoLancamentoActivity::class.java)
                     intent.putExtra(CHAVE_TIPOLANCAMENTO_ID, it.id)
                     startActivity(intent)
                 }
+
+                val listaTipos: List<TipoLancamento> =
+                    tipoLancamentoViewModel.buscarTodosTipos()
+                adapter.atualiza(listaTipos)
             }
         }
-
-        configuraFab()
-        return root
     }
 
     private fun configuraFab() {

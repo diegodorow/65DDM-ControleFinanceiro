@@ -50,8 +50,16 @@ class ContaViewModel(application: Application) : AndroidViewModel(application) {
         return contaDAO.buscaTodosSpinner()
     }
 
-    fun buscarContaPorId(contaId: Long): Flow<Conta?> {
+    fun buscaPorId(contaId: Long): Flow<Conta?> {
         return contaDAO.buscaPorId(contaId)
+    }
+
+    fun buscarTodasContas(): List<Conta> {
+        return contaDAO.buscaTodas()
+    }
+
+    fun remove(conta: Conta) {
+        return contaDAO.remove(conta)
     }
 
     private fun vinculaImagem(conta: String): String {

@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.udesc.ddm.controlefinanceiro.databinding.FragmentListarContaBinding
+import br.udesc.ddm.controlefinanceiro.model.Conta
 import br.udesc.ddm.controlefinanceiro.recyclerview.adapter.ContaAdapter
 import br.udesc.ddm.controlefinanceiro.ui.activity.CHAVE_CONTA_ID
 import br.udesc.ddm.controlefinanceiro.ui.activity.DetalhesContaActivity
@@ -24,20 +25,33 @@ class ListarContaFragment : Fragment() {
 
     private lateinit var adapter: ContaAdapter
 
+    private lateinit var contaViewModel: ContaViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val listaContaViewModel = ViewModelProvider(this).get(ContaViewModel::class.java)
+        contaViewModel = ViewModelProvider(this).get(ContaViewModel::class.java)
 
         _binding = FragmentListarContaBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        atualizaTela()
+        configuraFab()
+        return root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        atualizaTela()
+    }
+
+    fun atualizaTela() {
         val recyclerView = binding.fragmentListaContasRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        listaContaViewModel.contas.observe(viewLifecycleOwner) { contas ->
+        contaViewModel.contas.observe(viewLifecycleOwner) { contas ->
             if (contas != null) {
                 adapter = ContaAdapter(contas)
                 recyclerView.adapter = adapter
@@ -50,10 +64,10 @@ class ListarContaFragment : Fragment() {
                     intent.putExtra(CHAVE_CONTA_ID, it.id)
                     startActivity(intent)
                 }
+                val listaContas: List<Conta> = contaViewModel.buscarTodasContas()
+                adapter.atualiza(listaContas)
             }
         }
-        configuraFab()
-        return root
     }
 
     private fun configuraFab() {

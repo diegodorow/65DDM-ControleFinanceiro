@@ -17,12 +17,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import br.udesc.ddm.controlefinanceiro.MainActivity
 import br.udesc.ddm.controlefinanceiro.R
-import br.udesc.ddm.controlefinanceiro.database.AppDatabase
 import br.udesc.ddm.controlefinanceiro.databinding.ActivityDetalhesTipoLancamentoBinding
 import br.udesc.ddm.controlefinanceiro.model.TipoLancamento
+import br.udesc.ddm.controlefinanceiro.viewModel.TipoLancamentoViewModel
 import kotlinx.coroutines.launch
 
 class DetalhesTipoLancamentoActivity : AppCompatActivity() {
@@ -32,12 +33,13 @@ class DetalhesTipoLancamentoActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityDetalhesTipoLancamentoBinding.inflate(layoutInflater)
     }
-    private val tipoLancamentoDao by lazy {
-        AppDatabase.instancia(this).tipoLancamentoDao()
-    }
+
+    private lateinit var tipoLancamentoViewModel: TipoLancamentoViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        tipoLancamentoViewModel =
+            ViewModelProvider(this).get(TipoLancamentoViewModel::class.java)
         setContentView(binding.root)
         tentaCarregarTipoLancamento()
 
@@ -52,12 +54,13 @@ class DetalhesTipoLancamentoActivity : AppCompatActivity() {
 
     private fun buscaTipoLancamento() {
         lifecycleScope.launch {
-            tipoLancamentoDao.buscaPorId(tipoLancamentoId).collect { tipoLancamentoEncontrado ->
-                tipoLancamento = tipoLancamentoEncontrado
-                tipoLancamento?.let {
-                    preencheCampos(it)
-                } ?: finish()
-            }
+            tipoLancamentoViewModel.buscaPorId(tipoLancamentoId)
+                .collect { tipoLancamentoEncontrado ->
+                    tipoLancamento = tipoLancamentoEncontrado
+                    tipoLancamento?.let {
+                        preencheCampos(it)
+                    } ?: finish()
+                }
         }
     }
 
@@ -71,7 +74,7 @@ class DetalhesTipoLancamentoActivity : AppCompatActivity() {
             R.id.menu_detalhes_remover -> {
                 tipoLancamento?.let {
                     lifecycleScope.launch {
-                        tipoLancamentoDao.remove(it)
+                        tipoLancamentoViewModel.remove(it)
                         finish()
                     }
                 }

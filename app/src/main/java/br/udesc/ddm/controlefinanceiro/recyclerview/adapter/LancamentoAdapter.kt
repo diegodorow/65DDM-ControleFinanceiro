@@ -1,5 +1,6 @@
 package br.udesc.ddm.controlefinanceiro.recyclerview.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -54,6 +55,7 @@ class LancamentoAdapter(
         holder.vincula(lancamento)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun atualiza(lancamentos: List<Lancamento>) {
         this.lancamentos.clear()
         this.lancamentos.addAll(lancamentos)
