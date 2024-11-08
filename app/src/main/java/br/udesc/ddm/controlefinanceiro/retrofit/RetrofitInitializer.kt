@@ -8,9 +8,7 @@ import java.util.concurrent.TimeUnit
 
 class RetrofitInitializer {
 
-    val token = "Bearer d8pa2h1pwVhC41Cv8sNiYS"
     val client = OkHttpClient.Builder()
-//        .addInterceptor(token)
         .readTimeout(120, TimeUnit.SECONDS)
         .build()
 
