@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.udesc.ddm.controlefinanceiro.databinding.FragmentPesquisaAcaoBinding
 import br.udesc.ddm.controlefinanceiro.model.AcaoAPI
-import br.udesc.ddm.controlefinanceiro.model.oldRespostaAPI
+import br.udesc.ddm.controlefinanceiro.model.RespostaAPI
 import br.udesc.ddm.controlefinanceiro.recyclerview.adapter.AcaoAPIAdapter
 import br.udesc.ddm.controlefinanceiro.retrofit.RetrofitInitializer
 import retrofit2.Call
@@ -62,10 +62,10 @@ class PesquisaAcaoFragment : Fragment() {
 
         fun fetchPage() {
             val call = service.pesquisarAcao(nome)
-            call.enqueue(object : Callback<oldRespostaAPI> {
+            call.enqueue(object : Callback<RespostaAPI> {
                 override fun onResponse(
-                    call: Call<oldRespostaAPI>,
-                    response: Response<oldRespostaAPI>
+                    call: Call<RespostaAPI>,
+                    response: Response<RespostaAPI>
                 ) {
 
                     if (response.isSuccessful) {
@@ -79,7 +79,7 @@ class PesquisaAcaoFragment : Fragment() {
                     }
                 }
 
-                override fun onFailure(call: Call<oldRespostaAPI>, t: Throwable) {
+                override fun onFailure(call: Call<RespostaAPI>, t: Throwable) {
                     System.out.println(t.toString());
                     Toast.makeText(requireContext(), "${t.message}", Toast.LENGTH_LONG).show()
                 }

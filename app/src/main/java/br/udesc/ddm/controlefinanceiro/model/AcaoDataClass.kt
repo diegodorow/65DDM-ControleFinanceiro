@@ -23,7 +23,7 @@ data class AcaoAPI(
     val logourl: String
 )
 
-data class oldRespostaAPI(
+data class RespostaAPI(
     val results: List<AcaoAPI>,
     val requestedAt : String,
     val took: String

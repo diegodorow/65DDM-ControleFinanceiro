@@ -1,5 +1,11 @@
 package br.udesc.ddm.controlefinanceiro.ui.fragments
 
+/**
+ * Ajustes após a apresentação:
+ *      Ajustar o notifyDataChange(), para atualizar o recyclerView após alterações
+ *      Ajustar o uso do token para consumir a API normalmente
+ */
+
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,7 +21,6 @@ import br.udesc.ddm.controlefinanceiro.recyclerview.adapter.ContaAdapter
 import br.udesc.ddm.controlefinanceiro.ui.activity.CHAVE_CONTA_ID
 import br.udesc.ddm.controlefinanceiro.ui.activity.DetalhesContaActivity
 import br.udesc.ddm.controlefinanceiro.viewModel.ContaViewModel
-
 
 class ListarContaFragment : Fragment() {
 
