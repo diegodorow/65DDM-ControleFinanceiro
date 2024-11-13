@@ -8,7 +8,7 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout_acao"
+        android:id="@+id/textNomeAcao"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/fragment_cadastro_conta_nome"
+            android:id="@+id/fragment_text_nome_acao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Pesquisar ação"
@@ -32,9 +32,9 @@
         android:layout_marginTop="16dp"
         android:text="Pesquisar"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/textInputLayout_acao"
-        app:layout_constraintStart_toStartOf="@id/textInputLayout_acao"
-        app:layout_constraintTop_toBottomOf="@id/textInputLayout_acao"
+        app:layout_constraintEnd_toEndOf="@id/textNomeAcao"
+        app:layout_constraintStart_toStartOf="@id/textNomeAcao"
+        app:layout_constraintTop_toBottomOf="@id/textNomeAcao"
         app:layout_constraintVertical_bias="0.0" />
 
     <androidx.recyclerview.widget.RecyclerView

@@ -9,7 +9,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.udesc.ddm.controlefinanceiro.databinding.FragmentPesquisaAcaoBinding
-import br.udesc.ddm.controlefinanceiro.model.NovaRespostaApi
+import br.udesc.ddm.controlefinanceiro.model.AcaoAPI
+import br.udesc.ddm.controlefinanceiro.model.oldRespostaAPI
 import br.udesc.ddm.controlefinanceiro.recyclerview.adapter.AcaoAPIAdapter
 import br.udesc.ddm.controlefinanceiro.retrofit.RetrofitInitializer
 import retrofit2.Call
@@ -22,7 +23,7 @@ class PesquisaAcaoFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var retrofitInitializer: RetrofitInitializer
-    private val listaAcoes = mutableListOf<String>()
+    private val listaAcoes = mutableListOf<AcaoAPI>()
     private lateinit var adapter: AcaoAPIAdapter
 
     override fun onCreateView(
@@ -30,7 +31,7 @@ class PesquisaAcaoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentPesquisaAcaoBinding.inflate(inflater, container, false)
-        retrofitInitializer = RetrofitInitializer()
+        retrofitInitializer = RetrofitInitializer("d8pa2h1pwVhC41Cv8sNiYS")
 
         setupRecyclerView()
         setupSearchButton()
@@ -46,8 +47,10 @@ class PesquisaAcaoFragment : Fragment() {
 
     private fun setupSearchButton() {
         binding.btPesquisarAcao.setOnClickListener {
-            val nomeAcao = binding.textInputLayoutAcao.toString()
-            if (nomeAcao.isNotBlank()) {
+//            val nomeAcao = binding.textNomeAcao.text.toString()
+            val nomeAcao = binding.fragmentTextNomeAcao.text.toString()
+            Log.i("PesquisaAcaoFragment", "setupSearchButton ${nomeAcao.toString()}")
+            if (nomeAcao.isNotEmpty()) {
                 listaAcoes.clear()
                 searchAcoes(nomeAcao)
             } else {
@@ -58,17 +61,17 @@ class PesquisaAcaoFragment : Fragment() {
     }
 
     private fun searchAcoes(nome: String) {
-        var pagina = 1
         val service = retrofitInitializer.create()
 
+        //        val teste = "TGMA3"
         fun fetchPage() {
-            Log.i("PesquisaAcaoFragment", "antes de fazer a call")
-            val call = service.pesquisarAcao()
+            Log.i("PesquisaAcaoFragment", "antes de fazer a call $nome")
+            val call = service.pesquisarAcao(nome)
             Log.i("PesquisaAcaoFragment", "call: ${call.toString()}")
-            call.enqueue(object : Callback<NovaRespostaApi> {
+            call.enqueue(object : Callback<oldRespostaAPI> {
                 override fun onResponse(
-                    call: Call<NovaRespostaApi>,
-                    response: Response<NovaRespostaApi>
+                    call: Call<oldRespostaAPI>,
+                    response: Response<oldRespostaAPI>
                 ) {
 
                     Log.i("PesquisaAcaoFragment", "onResponse")
@@ -76,14 +79,15 @@ class PesquisaAcaoFragment : Fragment() {
                         Log.i("PesquisaAcaoFragment", "isSuccessful")
                         response.body()?.let { respostaAPI ->
 
+                            listaAcoes.addAll(respostaAPI.results)
                             adapter.notifyDataSetChanged()
-                            Log.i("PesquisaAcaoFragment", "notifyDataSetChanged")
 
-                            if (respostaAPI.stocks.isNotEmpty()) {
-                                listaAcoes.addAll(respostaAPI.stocks)
+
+                            Log.i("PesquisaAcaoFragment", "notifyDataSetChanged $respostaAPI")
+
+                            if (respostaAPI.results.isNotEmpty()) {
                                 Log.i("PesquisaAcaoFragment", "isNotEmpty")
-                                pagina++
-                                fetchPage()
+//                                fetchPage()
                             }
                         }
                     } else {
@@ -95,10 +99,11 @@ class PesquisaAcaoFragment : Fragment() {
                         Toast.makeText(requireContext(), response.message(), Toast.LENGTH_LONG)
                             .show()
                     }
+//                    listaAcoes.clear()
                 }
 
-                override fun onFailure(call: Call<NovaRespostaApi>, t: Throwable) {
-                    Log.i("PesquisaAcaoFragment", "else isSuccessful requireContext ${t.message}")
+                override fun onFailure(call: Call<oldRespostaAPI>, t: Throwable) {
+                    Log.i("PesquisaAcaoFragment", "onFailure ${t.message}")
                     System.out.println(t.toString());
                     Toast.makeText(requireContext(), "${t.message}", Toast.LENGTH_LONG).show()
                 }
