@@ -1,6 +1,7 @@
 package br.udesc.ddm.controlefinanceiro.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import br.udesc.ddm.controlefinanceiro.model.AcaoAPI
 import br.udesc.ddm.controlefinanceiro.model.RespostaAPI
 import br.udesc.ddm.controlefinanceiro.recyclerview.adapter.AcaoAPIAdapter
 import br.udesc.ddm.controlefinanceiro.retrofit.RetrofitInitializer
+import br.udesc.ddm.controlefinanceiro.ui.activity.API_TOKEN
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -30,7 +32,10 @@ class PesquisaAcaoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentPesquisaAcaoBinding.inflate(inflater, container, false)
-        retrofitInitializer = RetrofitInitializer("d8pa2h1pwVhC41Cv8sNiYS")
+
+        val apiToken = API_TOKEN
+
+        retrofitInitializer = RetrofitInitializer(apiToken)
 
         setupRecyclerView()
         setupSearchButton()
